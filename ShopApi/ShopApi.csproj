@@ -22,11 +22,11 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
       <Folder Include="Dtos\" />
       <Folder Include="Mappers\" />
-      <Folder Include="Repositories\" />
-      <Folder Include="Services\" />
+      <Folder Include="Repositories\CustomerProduct\" />
+      <Folder Include="Repositories\Product\" />
+      <Folder Include="Repositories\Sales\" />
     </ItemGroup>
 
 </Project>
