@@ -11,6 +11,36 @@ public class CustomerService
     {
         _customerRepository = customerRepository;
     }
+    
+    //TODO - Task AddAsync(Customer customer);
+    //TODO - Task UpdateAsync(Customer customer);
+    //TODO - Task DeleteAsync(Customer customer);
+    
+    public async Task<ApiResponse<Customer>> GetCustomerById(long id)
+    {
+        ApiResponse<Customer> response = new ApiResponse<Customer>();
+        try
+        {
+            var customer = await _customerRepository.GetByIdAsync(id);
+            if (customer == null)
+            {
+                response.Message = "Customer not found";
+                return response;
+            }
+            response.Data = customer;
+            response.Message = "Customer successfully retrieved";
+            return response;
+        }
+        catch (Exception e)
+        {
+            response.Message = e.Message;
+            response.Status = false;
+            Console.WriteLine($"Failed to get customer with id: {id} - {e}");
+            return response;
+        }
+    }
+    
+   
 
     public async Task<ApiResponse<List<Customer>>> GetAllCustomers()
     {
@@ -26,7 +56,7 @@ public class CustomerService
         {
             response.Message = e.Message;
             response.Status = false;
-            Console.WriteLine($"GetAllCustomers Error: {e}");
+            Console.WriteLine($"Failed to get all customers: {e}");
             return response;
         }
     }

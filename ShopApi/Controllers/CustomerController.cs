@@ -15,6 +15,12 @@ public class CustomerController: ControllerBase
     {
         _customerService = customerService;
     }
+    
+    [HttpGet("{id}")]
+    public async Task<ActionResult<ApiResponse<Customer>>> GetCustomerById(int id)
+    {
+        return Ok(await _customerService.GetCustomerById(id));
+    }
 
     [HttpGet]
     public async Task<ActionResult<ApiResponse<List<Customer>>>> GetAllCustomers()
