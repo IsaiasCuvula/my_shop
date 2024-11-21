@@ -22,8 +22,6 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Dtos\" />
-      <Folder Include="Mappers\" />
       <Folder Include="Repositories\CustomerProduct\" />
       <Folder Include="Repositories\Product\" />
       <Folder Include="Repositories\Sales\" />
