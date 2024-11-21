@@ -67,10 +67,10 @@ public class OrderService
                 response.Message = "Order not found";
                 return response;
             }
-            Console.WriteLine("*******************************************");
+            Console.WriteLine("******************************************");
             Console.WriteLine($"Old Total {order.Total}");
             Console.WriteLine($"New Total {await GetTotalByProduct(dto)}");
-            Console.WriteLine("*******************************************");
+            Console.WriteLine("******************************************");
             order.Total = await GetTotalByProduct(dto);
             order.Quantity = dto.Quantity;
             order.CustomerNumber = dto.CustomerNumber;
