@@ -11,7 +11,7 @@ public class OrderMapper
         {
             CustomerNumber = dto.CustomerNumber,
             ProductsNumbers = dto.ProductsNumbers,
-            OrderDate = dto.OrderDate.ToUniversalTime(),
+            OrderDate = DateTime.Now.ToUniversalTime(),
             Quantity = dto.Quantity,
             PaymentDate = dto.PaymentDate.ToUniversalTime(),
             PaymentStatus = dto.PaymentStatus,
