@@ -23,7 +23,6 @@
 
     <ItemGroup>
       <Folder Include="Repositories\CustomerProduct\" />
-      <Folder Include="Repositories\Product\" />
       <Folder Include="Repositories\Sales\" />
     </ItemGroup>
 

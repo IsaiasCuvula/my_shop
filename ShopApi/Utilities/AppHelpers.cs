@@ -4,7 +4,7 @@ namespace ShopApi.Utilities;
 
 public class AppHelpers
 {
-    public static int GenerateCustomerNumber()
+    public static int GenerateRandomNumber()
     {
         var currentYear = DateTime.Now.Year;
         var nextNumber = RandomNumberGenerator.GetInt32(currentYear, int.MaxValue);

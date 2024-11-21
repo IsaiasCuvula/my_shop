@@ -16,7 +16,7 @@ public class CustomerMapper
             Address = dto.Address,
             Phone = dto.Phone,
             Email = dto.Email,
-            CustomerNumber = AppHelpers.GenerateCustomerNumber()
+            CustomerNumber = AppHelpers.GenerateRandomNumber()
         };
     }
 }
