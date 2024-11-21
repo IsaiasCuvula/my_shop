@@ -18,7 +18,7 @@ public class CustomerRepository: ICustomerRepository
      return await _context.Customers.FirstOrDefaultAsync(c=> c.Id==id);
     }
 
-    public  async Task<IEnumerable<Customer>> GetAllAsync()
+    public  async Task<List<Customer>> GetAllAsync()
     {
         return await _context.Customers.ToListAsync();
     }
