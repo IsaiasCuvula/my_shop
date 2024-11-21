@@ -52,8 +52,8 @@ public class OrderService
     private async Task<decimal> GetTotalByProduct(OrderDto dto)
     {
         var product = await _productRepository.GetByNumberAsync(dto.ProductNumber);
-        if (product == null){return 0; }
-        return product.Price * product.Quantity;
+        if (product == null){return 0;}
+        return product.Price * dto.Quantity;
     }
     
     public async Task<ApiResponse<Order>> UpdateOrder(OrderDto dto, long orderId)
@@ -67,6 +67,10 @@ public class OrderService
                 response.Message = "Order not found";
                 return response;
             }
+            Console.WriteLine("*******************************************");
+            Console.WriteLine($"Old Total {order.Total}");
+            Console.WriteLine($"New Total {await GetTotalByProduct(dto)}");
+            Console.WriteLine("*******************************************");
             order.Total = await GetTotalByProduct(dto);
             order.Quantity = dto.Quantity;
             order.CustomerNumber = dto.CustomerNumber;
