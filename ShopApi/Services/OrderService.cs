@@ -3,6 +3,7 @@ using ShopApi.Mappers;
 using ShopApi.Models;
 using ShopApi.Repositories.Orders;
 using ShopApi.Repositories.Product;
+using ShopApi.Utilities;
 
 namespace ShopApi.Services;
 
@@ -20,6 +21,7 @@ public class OrderService
     public async Task<ApiResponse<List<Order>>>  CreateOrder(UserOrdersDto userOrdersDto)
     {
         ApiResponse<List<Order>> response = new ApiResponse<List<Order>>();
+        var groupOrderId = Guid.NewGuid().ToString();
         List<Order> orders = new List<Order>();
         try
         {
@@ -27,13 +29,13 @@ public class OrderService
             {
                 Order order = OrderMapper.MapToEntity(dto);
                 order.Total = await GetTotalByProduct(dto);
+                order.GroupOrderId = groupOrderId;
                 var savedOrder = await _orderRepository.AddAsync(order);
                 orders.Add(savedOrder);
             }
             
-            //Payment 
-            //decimal totalToPay = orders.Sum(o => o.Total) + userOrdersDto.DeliveryPrice;
-            //Order number (orderId) save it into stripe
+            //Payment Update order
+            //var paidOrders = await CheckoutOrder(orders, userOrdersDto.DeliveryPrice);
                 
             response.Data = orders;
             response.Message = "Order created successfully";
@@ -47,6 +49,27 @@ public class OrderService
             Console.WriteLine($"Failed to create order - {e}");
             return response;
         }
+    }
+
+    private async Task<List<Order>> CheckoutOrder(List<Order> orders, decimal deliveryPrice)
+    {
+        decimal totalToPay = orders.Sum(o => o.Total) + deliveryPrice;
+        //Order number (orderId) save it into stripe
+        //
+        return await UpdateOrderAfterPayment(orders);
+    }
+
+    private async Task<List<Order>> UpdateOrderAfterPayment(List<Order> orders)
+    {
+        List<Order> updatedOrders = new List<Order>();
+        foreach (var order in orders)
+        {
+            order.PaymentDate = DateTime.Now.ToUniversalTime();
+            order.PaymentStatus = PaymentStatus.Paid;
+            var updatedOrder = await _orderRepository.UpdateAsync(order);
+            updatedOrders.Add(updatedOrder);
+        }
+        return updatedOrders;
     }
     
     private async Task<decimal> GetTotalByProduct(OrderDto dto)
@@ -75,10 +98,7 @@ public class OrderService
             order.Quantity = dto.Quantity;
             order.CustomerNumber = dto.CustomerNumber;
             order.ProductNumber = dto.ProductNumber;
-            order.PaymentDate = dto.PaymentDate;
-            order.PaymentStatus = dto.PaymentStatus;
             order.ReturnStatus = dto.ReturnStatus;
-          
         
             var updatedOrder = await _orderRepository.UpdateAsync(order);
            

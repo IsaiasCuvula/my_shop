@@ -1,5 +1,6 @@
 using ShopApi.Dtos;
 using ShopApi.Models;
+using ShopApi.Utilities;
 
 namespace ShopApi.Mappers;
 
@@ -13,8 +14,7 @@ public class OrderMapper
             ProductNumber = dto.ProductNumber,
             OrderDate = DateTime.Now.ToUniversalTime(),
             Quantity = dto.Quantity,
-            PaymentDate = dto.PaymentDate.ToUniversalTime(),
-            PaymentStatus = dto.PaymentStatus,
+            PaymentStatus = PaymentStatus.Unpaid,
             ReturnStatus = dto.ReturnStatus
         };
     }
