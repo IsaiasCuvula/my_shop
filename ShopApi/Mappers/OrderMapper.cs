@@ -10,8 +10,9 @@ public class OrderMapper
         return new Order
         {
             CustomerNumber = dto.CustomerNumber,
-            ProductNumber = dto.ProductNumber,
+            ProductsNumbers = dto.ProductsNumbers,
             OrderDate = dto.OrderDate.ToUniversalTime(),
+            Quantity = dto.Quantity,
             PaymentDate = dto.PaymentDate.ToUniversalTime(),
             PaymentStatus = dto.PaymentStatus,
             ReturnStatus = dto.ReturnStatus
