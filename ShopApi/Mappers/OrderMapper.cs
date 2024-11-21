@@ -10,7 +10,7 @@ public class OrderMapper
         return new Order
         {
             CustomerNumber = dto.CustomerNumber,
-            ProductsNumbers = dto.ProductsNumbers,
+            ProductNumber = dto.ProductNumber,
             OrderDate = DateTime.Now.ToUniversalTime(),
             Quantity = dto.Quantity,
             PaymentDate = dto.PaymentDate.ToUniversalTime(),

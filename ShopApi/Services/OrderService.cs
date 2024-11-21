@@ -2,16 +2,58 @@ using ShopApi.Dtos;
 using ShopApi.Mappers;
 using ShopApi.Models;
 using ShopApi.Repositories.Orders;
+using ShopApi.Repositories.Product;
 
 namespace ShopApi.Services;
 
 public class OrderService
 {
      private readonly IOrderRepository _orderRepository;
+     private readonly IProductRepository _productRepository;
 
-    public OrderService(IOrderRepository orderRepository)
+    public OrderService(IOrderRepository orderRepository, IProductRepository productRepository)
     {
         _orderRepository = orderRepository;
+        _productRepository = productRepository;
+    }
+    
+    public async Task<ApiResponse<List<Order>>>  CreateOrder(UserOrdersDto userOrdersDto)
+    {
+        ApiResponse<List<Order>> response = new ApiResponse<List<Order>>();
+        List<Order> orders = new List<Order>();
+        try
+        {
+            foreach (var dto in userOrdersDto.Orders)
+            {
+                Order order = OrderMapper.MapToEntity(dto);
+                order.Total = await GetTotalByProduct(dto);
+                var savedOrder = await _orderRepository.AddAsync(order);
+                orders.Add(savedOrder);
+            }
+            
+            //Payment 
+            //decimal totalToPay = orders.Sum(o => o.Total) + userOrdersDto.DeliveryPrice;
+            //Order number (orderId) save it into stripe
+                
+            response.Data = orders;
+            response.Message = "Order created successfully";
+            return response;
+        }
+        catch (Exception e)
+        {
+            response.Data = orders;
+            response.Message = e.Message;
+            response.Status = false;
+            Console.WriteLine($"Failed to create order - {e}");
+            return response;
+        }
+    }
+    
+    private async Task<decimal> GetTotalByProduct(OrderDto dto)
+    {
+        var product = await _productRepository.GetByNumberAsync(dto.ProductNumber);
+        if (product == null){return 0; }
+        return product.Price * product.Quantity;
     }
     
     public async Task<ApiResponse<Order>> UpdateOrder(OrderDto dto, long orderId)
@@ -25,13 +67,14 @@ public class OrderService
                 response.Message = "Order not found";
                 return response;
             }
-            
+            order.Total = await GetTotalByProduct(dto);
+            order.Quantity = dto.Quantity;
             order.CustomerNumber = dto.CustomerNumber;
-            order.OrderDate = dto.OrderDate;
-            order.ProductsNumbers = dto.ProductsNumbers;
+            order.ProductNumber = dto.ProductNumber;
             order.PaymentDate = dto.PaymentDate;
             order.PaymentStatus = dto.PaymentStatus;
             order.ReturnStatus = dto.ReturnStatus;
+          
         
             var updatedOrder = await _orderRepository.UpdateAsync(order);
            
@@ -44,27 +87,6 @@ public class OrderService
             response.Message = e.Message;
             response.Status = false;
             Console.WriteLine($"Failed to updated order with id: {orderId} - {e}");
-            return response;
-        }
-    }
-    
-    public async Task<ApiResponse<Order>>  CreateOrder(OrderDto dto)
-    {
-        ApiResponse<Order> response = new ApiResponse<Order>();
-        try
-        {
-            Order order = OrderMapper.MapToEntity(dto);
-           var savedOrder = await _orderRepository.AddAsync(order);
-           
-            response.Data = savedOrder;
-            response.Message = "Order created successfully";
-            return response;
-        }
-        catch (Exception e)
-        {
-            response.Message = e.Message;
-            response.Status = false;
-            Console.WriteLine($"Failed to create order - {e}");
             return response;
         }
     }
@@ -139,4 +161,7 @@ public class OrderService
             return response;
         }
     }
+
+
+   
 }

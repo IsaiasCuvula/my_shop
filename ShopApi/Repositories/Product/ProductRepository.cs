@@ -18,6 +18,12 @@ public class ProductRepository: IProductRepository
         return await _context.Products.FirstOrDefaultAsync(c=> c.Id==id);
     }
 
+    public async Task<Product?> GetByNumberAsync(long productNumber)
+    {
+        return await _context.Products
+            .FirstOrDefaultAsync(p=> p.ProductNumber == productNumber);
+    }
+
     public  async Task<List<Product>> GetAllAsync()
     {
         return await _context.Products.ToListAsync();

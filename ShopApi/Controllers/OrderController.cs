@@ -23,7 +23,7 @@ public class OrderController: ControllerBase
     }
     
     [HttpPost]
-    public async Task<ActionResult<ApiResponse<Order>>> CreateOrder(OrderDto dto)
+    public async Task<ActionResult<ApiResponse<Order>>> CreateOrder(UserOrdersDto dto)
     {
         return Ok(await _orderService.CreateOrder(dto));
     }
