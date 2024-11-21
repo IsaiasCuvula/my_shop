@@ -2,7 +2,7 @@ using ShopApi.Utilities;
 
 namespace ShopApi.Models;
 
-public class Sales
+public class Order
 {
    public long Id { get; set; } 
    public long CustomerNumber {get;set;}
