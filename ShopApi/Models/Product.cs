@@ -12,8 +12,4 @@ public class Product
     public int Quantity { get; set; }
     public long ProductNumber { get; set; }
     public required string Image { get; set; }
-    
-    [JsonIgnore]
-    public ICollection<CustomerProduct> CustomerProducts { get; set; }
-    
 }

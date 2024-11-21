@@ -18,7 +18,4 @@ public class Customer
     [MaxLength(254)]
     public required string Email { get; set; } 
     public long CustomerNumber { get; set; }
-    
-    [JsonIgnore]
-    public ICollection<CustomerProduct> CustomerProducts { get; set; }
 }

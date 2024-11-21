@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ShopApi.Data;
 using ShopApi.Repositories;
+using ShopApi.Repositories.Orders;
 using ShopApi.Repositories.Product;
 using ShopApi.Services;
 
@@ -14,6 +15,9 @@ builder.Services.AddScoped<CustomerService>();
 
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ProductService>();
+
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<OrderService>();
 
 builder.Services.AddControllers();
 

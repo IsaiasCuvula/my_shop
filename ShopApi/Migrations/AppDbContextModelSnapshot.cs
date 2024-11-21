@@ -66,35 +66,6 @@ namespace ShopApi.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("ShopApi.Models.CustomerProduct", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
-
-                    b.Property<long>("CustomerId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("ProductId")
-                        .HasColumnType("bigint");
-
-                    b.Property<DateTime>("PurchaseDate")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<int>("Quantity")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
-
-                    b.HasIndex("ProductId");
-
-                    b.ToTable("CustomerProducts");
-                });
-
             modelBuilder.Entity("ShopApi.Models.Order", b =>
                 {
                     b.Property<long>("Id")
@@ -161,35 +132,6 @@ namespace ShopApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Products");
-                });
-
-            modelBuilder.Entity("ShopApi.Models.CustomerProduct", b =>
-                {
-                    b.HasOne("ShopApi.Models.Customer", "Customer")
-                        .WithMany("CustomerProducts")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ShopApi.Models.Product", "Product")
-                        .WithMany("CustomerProducts")
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Customer");
-
-                    b.Navigation("Product");
-                });
-
-            modelBuilder.Entity("ShopApi.Models.Customer", b =>
-                {
-                    b.Navigation("CustomerProducts");
-                });
-
-            modelBuilder.Entity("ShopApi.Models.Product", b =>
-                {
-                    b.Navigation("CustomerProducts");
                 });
 #pragma warning restore 612, 618
         }
