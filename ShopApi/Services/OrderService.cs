@@ -18,6 +18,44 @@ public class OrderService
         _productRepository = productRepository;
     }
     
+    public async Task<ApiResponse<List<Order>>> GetAllUnpaidOrders()
+    {
+        ApiResponse<List<Order>> response = new ApiResponse<List<Order>>();
+        try
+        {
+            var unpaidOrders = await _orderRepository.GetAllUnpaidOrdersAsync();
+            response.Data = unpaidOrders;
+            response.Message = unpaidOrders.Count == 0 ? "There is no unpaid order":"All unpaid orders successfully retrieved";
+            return response;
+        }
+        catch (Exception e)
+        {
+            response.Message = e.Message;
+            response.Status = false;
+            Console.WriteLine($"Failed to get all unpaid orders: {e}");
+            return response;
+        }
+    }
+
+    public async Task<ApiResponse<List<Order>>> GetAllReturnedOrders()
+    {
+        ApiResponse<List<Order>> response = new ApiResponse<List<Order>>();
+        try
+        {
+            var returnedOrders = await _orderRepository.GetAllReturnedOrdersAsync();
+            response.Data = returnedOrders;
+            response.Message = returnedOrders.Count == 0 ? "There is no returned order yet":"All returned orders successfully retrieved";
+            return response;
+        }
+        catch (Exception e)
+        {
+            response.Message = e.Message;
+            response.Status = false;
+            Console.WriteLine($"Failed to get all returned orders: {e}");
+            return response;
+        }
+    }
+    
     public async Task<ApiResponse<List<Order>>>  CreateOrder(UserOrdersDto userOrdersDto)
     {
         ApiResponse<List<Order>> response = new ApiResponse<List<Order>>();

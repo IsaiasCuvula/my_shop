@@ -16,6 +16,20 @@ public class OrderController: ControllerBase
         _orderService = orderService;
     }
     
+    [HttpGet]
+    public async Task<ActionResult<ApiResponse<List<Order>>>> GetAllUnpaidOrders()
+    {
+        var orders = await _orderService.GetAllUnpaidOrders();
+        return Ok(orders);
+    }
+    
+    [HttpGet]
+    public async Task<ActionResult<ApiResponse<List<Order>>>> GetAllReturnedOrders()
+    {
+        var orders = await _orderService.GetAllReturnedOrders();
+        return Ok(orders);
+    }
+    
     [HttpPut("{id}")]
     public async Task<ActionResult<ApiResponse<Order>>> UpdateOrder(long id, OrderDto dto)
     {
