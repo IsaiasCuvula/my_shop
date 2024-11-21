@@ -32,29 +32,34 @@ namespace ShopApi.Migrations
 
                     b.Property<string>("Address")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(254)
+                        .HasColumnType("character varying(254)");
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(254)
+                        .HasColumnType("character varying(254)");
 
-                    b.Property<int>("CustomerNumber")
-                        .HasColumnType("integer");
+                    b.Property<long>("CustomerNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(254)
+                        .HasColumnType("character varying(254)");
 
-                    b.Property<int>("IdCardNumber")
-                        .HasColumnType("integer");
+                    b.Property<long>("IdCardNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("Phone")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.HasKey("Id");
 
@@ -116,8 +121,8 @@ namespace ShopApi.Migrations
                     b.Property<decimal>("Price")
                         .HasColumnType("numeric");
 
-                    b.Property<int>("ProductNumber")
-                        .HasColumnType("integer");
+                    b.Property<long>("ProductNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("integer");
@@ -135,8 +140,8 @@ namespace ShopApi.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<long>("Id"));
 
-                    b.Property<int>("CustomerNumber")
-                        .HasColumnType("integer");
+                    b.Property<long>("CustomerNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<DateTime>("OrderDate")
                         .HasColumnType("timestamp with time zone");
@@ -147,8 +152,8 @@ namespace ShopApi.Migrations
                     b.Property<int>("PaymentStatus")
                         .HasColumnType("integer");
 
-                    b.Property<int>("ProductNumber")
-                        .HasColumnType("integer");
+                    b.Property<long>("ProductNumber")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("ReturnStatus")
                         .HasColumnType("integer");

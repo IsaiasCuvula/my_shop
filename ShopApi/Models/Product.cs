@@ -10,7 +10,7 @@ public class Product
     public decimal Price { get; set; }
     public DateTime ExpirationDate { get; set; }
     public int Quantity { get; set; }
-    public int ProductNumber { get; set; }
+    public long ProductNumber { get; set; }
     public required string Image { get; set; }
     
     [JsonIgnore]
