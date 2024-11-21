@@ -4,7 +4,8 @@ namespace ShopApi.Dtos;
 
 public record OrderDto(
         long CustomerNumber,
-        long ProductNumber,
+        List<long> ProductsNumbers,
+        int Quantity,
         DateTime OrderDate,
         DateTime PaymentDate,
         PaymentStatus PaymentStatus,
