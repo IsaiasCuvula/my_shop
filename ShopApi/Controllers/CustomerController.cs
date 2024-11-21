@@ -17,7 +17,7 @@ public class CustomerController: ControllerBase
     }
     
     [HttpGet("{id}")]
-    public async Task<ActionResult<ApiResponse<Customer>>> GetCustomerById(int id)
+    public async Task<ActionResult<ApiResponse<Customer>>> GetCustomerById(long id)
     {
         return Ok(await _customerService.GetCustomerById(id));
     }
@@ -27,6 +27,12 @@ public class CustomerController: ControllerBase
     {
         var customers = await _customerService.GetAllCustomers();
         return Ok(customers);
+    }
+    
+    [HttpDelete("{id}")]
+    public async Task<ActionResult<ApiResponse<Customer>>> DeleteCustomerById(long id)
+    {
+        return Ok(await _customerService.DeleteCustomerById(id));
     }
     
 }
