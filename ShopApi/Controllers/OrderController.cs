@@ -16,14 +16,14 @@ public class OrderController: ControllerBase
         _orderService = orderService;
     }
     
-    [HttpGet]
+    [HttpGet("unpaid")]
     public async Task<ActionResult<ApiResponse<List<Order>>>> GetAllUnpaidOrders()
     {
         var orders = await _orderService.GetAllUnpaidOrders();
         return Ok(orders);
     }
     
-    [HttpGet]
+    [HttpGet("returned")]
     public async Task<ActionResult<ApiResponse<List<Order>>>> GetAllReturnedOrders()
     {
         var orders = await _orderService.GetAllReturnedOrders();
@@ -48,7 +48,7 @@ public class OrderController: ControllerBase
         return Ok(await _orderService.GetOrderById(id));
     }
 
-    [HttpGet]
+    [HttpGet("all")]
     public async Task<ActionResult<ApiResponse<List<Order>>>> GetAllOrders()
     {
         var orders = await _orderService.GetAllOrders();
