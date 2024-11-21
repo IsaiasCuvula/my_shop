@@ -12,7 +12,6 @@ public class Order
    public DateTime PaymentDate {get;set;}
    public PaymentStatus PaymentStatus {get;set;}
    public ReturnStatus ReturnStatus {get;set;}
-   public long PaymentId {get;set;}
    public decimal Total {get;set;}
    
    public String GroupOrderId { get; set; } 
