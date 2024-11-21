@@ -2,6 +2,7 @@ namespace ShopApi.Models;
 
 public class CustomerProduct
 {
+    public long Id { get; set; } 
     public long CustomerId { get; set; }
     public required Customer Customer { get; set; }
     public long ProductId { get; set; }
