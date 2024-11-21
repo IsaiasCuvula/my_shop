@@ -1,3 +1,5 @@
+using ShopApi.Dtos;
+using ShopApi.Mappers;
 using ShopApi.Models;
 using ShopApi.Repositories;
 
@@ -12,8 +14,62 @@ public class CustomerService
         _customerRepository = customerRepository;
     }
     
-    //TODO - Task AddAsync(Customer customer);
-    //TODO - Task UpdateAsync(Customer customer);
+    public async Task<ApiResponse<Customer>> UpdateCustomer(CustomerDto dto, long customerId)
+    {
+        ApiResponse<Customer> response = new ApiResponse<Customer>();
+        try
+        {
+            var customer = await _customerRepository.GetByIdAsync(customerId);
+            if (customer == null)
+            {
+                response.Message = "Customer not found";
+                return response;
+            }
+            
+            customer.Name = dto.Name;
+            customer.Email = dto.Email;
+            customer.Phone = dto.Phone;
+            customer.Address = dto.Address;
+            customer.City = dto.City;
+            customer.IdCardNumber = dto.IdCardNumber;
+            
+            
+            var updatedCustomer = await _customerRepository.UpdateAsync(customer);
+           
+            response.Data = updatedCustomer;
+            response.Message = "Customer updated successfully";
+            return response;
+        }
+        catch (Exception e)
+        {
+            response.Message = e.Message;
+            response.Status = false;
+            Console.WriteLine($"Failed to updated customer with id: {customerId} - {e}");
+            return response;
+        }
+    }
+    
+    public async Task<ApiResponse<Customer>>  CreateCustomer(CustomerDto dto)
+    {
+        ApiResponse<Customer> response = new ApiResponse<Customer>();
+        try
+        {
+            Customer customer = CustomerMapper.MapToEntity(dto);
+           
+           var savedCustomer = await _customerRepository.AddAsync(customer);
+           
+            response.Data = savedCustomer;
+            response.Message = "Customer created successfully";
+            return response;
+        }
+        catch (Exception e)
+        {
+            response.Message = e.Message;
+            response.Status = false;
+            Console.WriteLine($"Failed to create customer - {e}");
+            return response;
+        }
+    }
   
     public async Task<ApiResponse<Customer>>  DeleteCustomerById(long id)
     {

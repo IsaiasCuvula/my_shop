@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using ShopApi.Dtos;
 using ShopApi.Models;
 using ShopApi.Services;
 
@@ -14,6 +15,18 @@ public class CustomerController: ControllerBase
     public CustomerController(CustomerService customerService)
     {
         _customerService = customerService;
+    }
+    
+    [HttpPut("{id}")]
+    public async Task<ActionResult<ApiResponse<Customer>>> UpdateCustomer(long id, CustomerDto dto)
+    {
+        return Ok(await _customerService.UpdateCustomer(dto, id));
+    }
+    
+    [HttpPost]
+    public async Task<ActionResult<ApiResponse<Customer>>> CreateCustomer(CustomerDto dto)
+    {
+        return Ok(await _customerService.CreateCustomer(dto));
     }
     
     [HttpGet("{id}")]
