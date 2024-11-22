@@ -33,7 +33,21 @@ public class ProductRepository: IProductRepository
 
     public async Task<List<Product>> GetProductsExpiringInNext24HoursAsync()
     {
-        throw new NotImplementedException();
+        var now = DateTime.UtcNow.ToUniversalTime();
+        var dateAfter24Hours = now.AddHours(24).ToUniversalTime();
+        
+        var query = @"
+            SELECT * FROM Products p
+            WHERE p.expiration_date BETWEEN {0} AND {1}";
+        
+        Console.WriteLine("**********************************");
+        Console.WriteLine($"now: {now}");
+        Console.WriteLine($"Date after 24 hours: {dateAfter24Hours}");
+        Console.WriteLine("**********************************");
+
+        return await _context.Products
+            .FromSqlRaw(query, now, dateAfter24Hours)
+            .ToListAsync();
     }
 
     public async Task<List<Product>> GetProductsWithLongShelfLifeAsync()

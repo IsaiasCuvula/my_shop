@@ -14,6 +14,25 @@ public class ProductService
         _productRepository = productRepository;
     }
 
+    public async Task<ApiResponse<List<Product>>> GetProductsExpiringInNext24Hours()
+    {
+        ApiResponse<List<Product>> response = new ApiResponse<List<Product>>();
+        try
+        {
+            var products = await _productRepository.GetProductsExpiringInNext24HoursAsync();
+            response.Data = products;
+            response.Message = products.Count == 0 ? "There is no product that will expire in next 24h":"All products that will expire in next 24h successfully retrieved";
+            return response;
+        }
+        catch (Exception e)
+        {
+            response.Message = e.Message;
+            response.Status = false;
+            Console.WriteLine($"Failed to get all expired products: {e}");
+            return response;
+        }
+    }
+    
     public async Task<ApiResponse<List<Product>>> GetExpiredProducts()
     {
         ApiResponse<List<Product>> response = new ApiResponse<List<Product>>();

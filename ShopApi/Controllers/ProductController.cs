@@ -16,6 +16,13 @@ public class ProductController: ControllerBase
         _productService = productService;
     }
     
+    [HttpGet("expired-in-24-hours")]
+    public async Task<ActionResult<ApiResponse<List<Product>>>> GetProductsExpiringInNext24Hours()
+    {
+        var products = await _productService.GetProductsExpiringInNext24Hours();
+        return Ok(products);
+    }
+    
     [HttpGet("expired")]
     public async Task<ActionResult<ApiResponse<List<Product>>>> GetExpiredProducts()
     {
