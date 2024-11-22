@@ -47,14 +47,14 @@ public class OrderRepository: IOrderRepository
     public async Task<List<Order>> GetAllUnpaidOrdersAsync()
     {
         return await _context.Orders
-            .FromSql($"SELECT * FROM \"Orders\" WHERE \"PaymentStatus\" = {PaymentStatus.Unpaid}")
+            .FromSql($"SELECT * FROM Orders WHERE payment_status = {PaymentStatus.Unpaid}")
             .ToListAsync();
     }
 
     public async Task<List<Order>> GetAllReturnedOrdersAsync()
     {
         return await _context.Orders
-            .FromSql($"SELECT * FROM \"Orders\" WHERE \"ReturnStatus\" = {ReturnStatus.Returned}")
+            .FromSql($"SELECT * FROM Orders WHERE return_status = {ReturnStatus.Returned}")
             .ToListAsync();
     }
 }
