@@ -13,6 +13,26 @@ public class CustomerService
     {
         _customerRepository = customerRepository;
     }
+
+    
+    public async Task<ApiResponse<List<Customer>>> GetAllCustomerShoppedLasWeek()
+    {
+        ApiResponse<List<Customer>> response = new ApiResponse<List<Customer>>();
+        try
+        {
+            var customers = await _customerRepository.GetAllCustomerShoppedLasWeekAsync();
+            response.Data = customers;
+            response.Message = customers.Count == 0 ? "There is no customer who shopped last week yet":"Customers who shopped last week successfully retrieved";
+            return response;
+        }
+        catch (Exception e)
+        {
+            response.Message = e.Message;
+            response.Status = false;
+            Console.WriteLine($"Failed to get all customers who shopped last week: {e}");
+            return response;
+        }
+    }
     
     public async Task<ApiResponse<Customer>> UpdateCustomer(CustomerDto dto, long customerId)
     {

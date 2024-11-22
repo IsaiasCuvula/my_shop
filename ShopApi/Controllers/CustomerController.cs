@@ -17,6 +17,13 @@ public class CustomerController: ControllerBase
         _customerService = customerService;
     }
     
+    [HttpGet("shopped-last-week")]
+    public async Task<ActionResult<ApiResponse<List<Customer>>>> GetAllCustomerShoppedLasWeek()
+    {
+        var customers = await _customerService.GetAllCustomerShoppedLasWeek();
+        return Ok(customers);
+    }
+    
     [HttpPut("{id}")]
     public async Task<ActionResult<ApiResponse<Customer>>> UpdateCustomer(long id, CustomerDto dto)
     {
@@ -35,7 +42,7 @@ public class CustomerController: ControllerBase
         return Ok(await _customerService.GetCustomerById(id));
     }
 
-    [HttpGet]
+    [HttpGet("all")]
     public async Task<ActionResult<ApiResponse<List<Customer>>>> GetAllCustomers()
     {
         var customers = await _customerService.GetAllCustomers();

@@ -12,6 +12,24 @@ public class CustomerRepository: ICustomerRepository
     {
         _context = context;
     }
+   
+
+    public async Task<List<Customer>> GetAllCustomerShoppedLasWeekAsync()
+    {
+        var oneWeekAgo = DateTime.UtcNow.AddDays(-7);
+        
+        return await _context.Orders
+            .Where(o => o.OrderDate >= oneWeekAgo)
+            .Select(o => o.Customer)
+            .Distinct()
+            .ToListAsync();
+    }
+    
+    public async Task<Customer?> GetByNumberAsync(long customerNumber)
+    {
+        return await _context.Customers
+            .FirstOrDefaultAsync(c=> c.CustomerNumber == customerNumber);
+    }
     
     public async Task<Customer?> GetByIdAsync(long id)
     {

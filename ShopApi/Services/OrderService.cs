@@ -1,6 +1,7 @@
 using ShopApi.Dtos;
 using ShopApi.Mappers;
 using ShopApi.Models;
+using ShopApi.Repositories;
 using ShopApi.Repositories.Orders;
 using ShopApi.Repositories.Product;
 using ShopApi.Utilities;
@@ -11,11 +12,17 @@ public class OrderService
 {
      private readonly IOrderRepository _orderRepository;
      private readonly IProductRepository _productRepository;
+     private readonly ICustomerRepository _customerRepository;
 
-    public OrderService(IOrderRepository orderRepository, IProductRepository productRepository)
+    public OrderService(
+        IOrderRepository orderRepository, 
+        IProductRepository productRepository, 
+        ICustomerRepository customerRepository
+   )
     {
         _orderRepository = orderRepository;
         _productRepository = productRepository;
+        _customerRepository = customerRepository;
     }
     
     public async Task<ApiResponse<List<Order>>> GetAllUnpaidOrders()
@@ -59,14 +66,22 @@ public class OrderService
     public async Task<ApiResponse<List<Order>>>  CreateOrder(UserOrdersDto userOrdersDto)
     {
         ApiResponse<List<Order>> response = new ApiResponse<List<Order>>();
+        var customerNumber = userOrdersDto.Orders.First().CustomerNumber;
         var groupOrderId = Guid.NewGuid().ToString();
         List<Order> orders = new List<Order>();
         try
         {
+            var customer = await _customerRepository.GetByNumberAsync(customerNumber);
+            if (customer == null)
+            {
+                response.Message = "Customer not found";
+                return response;
+            }
             foreach (var dto in userOrdersDto.Orders)
             {
                 Order order = OrderMapper.MapToEntity(dto);
                 order.Total = await GetTotalByProduct(dto);
+                order.Customer = customer;
                 order.GroupOrderId = groupOrderId;
                 var savedOrder = await _orderRepository.AddAsync(order);
                 orders.Add(savedOrder);
