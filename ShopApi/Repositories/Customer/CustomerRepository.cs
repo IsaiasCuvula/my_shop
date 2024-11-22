@@ -19,13 +19,15 @@ public class CustomerRepository: ICustomerRepository
     {
         var lastWeekMonday = AppHelpers.GetLastWeekMonday();
         var lastWeekSunday = lastWeekMonday.AddDays(6);
-        Console.WriteLine("**************************************");
-        Console.WriteLine("Last week's Sunday: " + lastWeekSunday.ToString("yyyy-MM-dd"));
-        Console.WriteLine("**************************************");
-        return await _context.Orders
-            .Where(o => o.OrderDate >= lastWeekMonday && o.OrderDate <= lastWeekSunday)
-            .Select(o => o.Customer)
-            .Distinct()
+        
+        var query = @"
+        SELECT DISTINCT c.*
+        FROM Orders o
+        JOIN Customers c ON o.customer_number = c.customer_number
+        WHERE o.order_date BETWEEN {0} AND {1}";
+
+        return await _context.Customers
+            .FromSqlRaw(query, lastWeekMonday, lastWeekSunday)
             .ToListAsync();
     }
     
