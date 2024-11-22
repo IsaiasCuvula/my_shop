@@ -17,6 +17,13 @@ public class CustomerController: ControllerBase
         _customerService = customerService;
     }
     
+    [HttpGet("top-customer")]
+    public async Task<ActionResult<ApiResponse<Customer>>> GetTopCustomerByTurnover()
+    {
+        var customers = await _customerService.GetTopCustomerByTurnover();
+        return Ok(customers);
+    }
+    
     [HttpGet("shopped-last-week")]
     public async Task<ActionResult<ApiResponse<List<Customer>>>> GetAllCustomerShoppedLasWeek()
     {
