@@ -1,6 +1,7 @@
 using ShopApi.Dtos;
 using ShopApi.Mappers;
 using ShopApi.Models;
+using ShopApi.Repositories.Orders;
 using ShopApi.Repositories.Product;
 
 namespace ShopApi.Services;
@@ -8,12 +9,57 @@ namespace ShopApi.Services;
 public class ProductService
 {
     private readonly IProductRepository _productRepository;
+    private readonly IOrderRepository _orderRepository;
 
-    public ProductService(IProductRepository productRepository)
+    public ProductService(IProductRepository productRepository, IOrderRepository orderRepository)
     {
         _productRepository = productRepository;
+        _orderRepository = orderRepository;
     }
 
+    public async Task<ApiResponse<List<Product>>> GetMostPopularProducts()
+    {
+        ApiResponse<List<Product>> response = new ApiResponse<List<Product>>();
+        Dictionary<long, int> productsCount = new Dictionary<long, int>();
+        List<Product> popularProducts = new List<Product>();
+
+        try
+        {
+            var orders = await _orderRepository.GetAllAsync();
+
+            foreach (var order in orders)
+            {
+                if (productsCount.ContainsKey(order.ProductNumber))
+                {
+                    productsCount[order.ProductNumber] += order.Quantity;
+                }
+                else
+                {
+                    productsCount[order.ProductNumber] = order.Quantity;
+                }
+            }
+            var sortedProducts = productsCount.OrderByDescending(x => x.Value);
+            foreach (var dic in sortedProducts)
+            {
+                var product = await _productRepository.GetByNumberAsync(dic.Key);
+                if (product != null)
+                {                
+                    popularProducts.Add(product);
+                }
+            }
+            response.Data = popularProducts;
+            response.Message = popularProducts.Count == 0 ? "There is no most popular product yet":"All most popular products successfully retrieved";
+            return response;
+        }
+        catch (Exception e)
+        {
+            response.Message = e.Message;
+            response.Status = false;
+            Console.WriteLine($"Failed to get the most popular products: {e}");
+            return response;
+        }
+    }
+    
     public async Task<ApiResponse<List<Product>>> GetProductsExpiringInNext3Months()
     {
         ApiResponse<List<Product>> response = new ApiResponse<List<Product>>();

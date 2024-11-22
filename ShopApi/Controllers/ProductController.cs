@@ -16,6 +16,13 @@ public class ProductController: ControllerBase
         _productService = productService;
     }
     
+    [HttpGet("most-popular")]
+    public async Task<ActionResult<ApiResponse<List<Product>>>> GetMostPopularProducts()
+    {
+        var products = await _productService.GetMostPopularProducts();
+        return Ok(products);
+    } 
+    
     [HttpGet("expire-in-3-months")]
     public async Task<ActionResult<ApiResponse<List<Product>>>> GetProductsExpiringInNext3Months()
     {

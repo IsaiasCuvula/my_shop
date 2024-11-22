@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using ShopApi.Data;
-using ShopApi.Utilities;
 
 namespace ShopApi.Repositories.Product;
 using Models; 
@@ -68,7 +67,7 @@ public class ProductRepository: IProductRepository
             .FromSqlRaw(query, dateAfter3Months)
             .ToListAsync();
     }
-    
+
     public async Task<Product?> GetByIdAsync(long id)
     {
         return await _context.Products.FirstOrDefaultAsync(c=> c.Id==id);
