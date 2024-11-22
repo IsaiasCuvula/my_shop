@@ -22,6 +22,7 @@ public class Customer
     public required string Email { get; set; } 
     [Column("customer_number")]
     public long CustomerNumber { get; set; }
-    [Column("orders_id")]
+ 
+    [Column("orders_id"), JsonIgnore]
     public ICollection<Order> Orders { get; set; }
 }

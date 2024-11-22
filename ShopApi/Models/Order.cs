@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 using ShopApi.Utilities;
 
 namespace ShopApi.Models;
@@ -25,7 +26,8 @@ public class Order
    [Column("total")]
    public decimal Total {get;set;}
    [Column("group_order_id")]
-   public String GroupOrderId { get; set; } 
-   [Column("customer_id")]
+   public String GroupOrderId { get; set; }
+   
+   [Column("customer_id"), JsonIgnore]
    public Customer Customer {get;set;}
 }
