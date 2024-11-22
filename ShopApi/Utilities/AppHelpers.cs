@@ -10,4 +10,20 @@ public class AppHelpers
         var nextNumber = RandomNumberGenerator.GetInt32(currentYear, int.MaxValue);
         return currentYear + nextNumber;
     }
+
+    public static DateTime GetLastWeekMonday()
+    {
+        DateTime today = DateTime.UtcNow;
+        int daysSinceMonday = (int)today.DayOfWeek - (int)DayOfWeek.Monday;
+
+        // If today is Sunday, subtract an extra 7 days for the previous week
+        if (daysSinceMonday < 0) daysSinceMonday += 7;
+
+        // Get the Monday of last week
+        DateTime lastWeekMonday = today.AddDays(-7 - daysSinceMonday);
+        Console.WriteLine("**************************************");
+        Console.WriteLine("Last week's Monday: " + lastWeekMonday.ToString("yyyy-MM-dd"));
+        Console.WriteLine("**************************************");
+        return lastWeekMonday;
+    }
 }

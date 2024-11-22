@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ShopApi.Data;
 using ShopApi.Models;
+using ShopApi.Utilities;
 
 namespace ShopApi.Repositories;
 
@@ -16,7 +17,7 @@ public class CustomerRepository: ICustomerRepository
 
     public async Task<List<Customer>> GetAllCustomerShoppedLasWeekAsync()
     {
-        var oneWeekAgo = DateTime.UtcNow.AddDays(-7);
+        var oneWeekAgo = AppHelpers.GetLastWeekMonday();
         
         return await _context.Orders
             .Where(o => o.OrderDate >= oneWeekAgo)
