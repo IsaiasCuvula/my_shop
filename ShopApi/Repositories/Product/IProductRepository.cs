@@ -12,5 +12,5 @@ public interface IProductRepository
     Task<List<Product>> GetAllAsync();
     Task<List<Product>> GetExpiredProductsAsync();
     Task<List<Product>> GetProductsExpiringInNext24HoursAsync();
-    Task<List<Product>> GetProductsWithLongShelfLifeAsync();
+    Task<List<Product>> GetProductsExpiringInNext3MonthsAsync();
 }

@@ -50,9 +50,23 @@ public class ProductRepository: IProductRepository
             .ToListAsync();
     }
 
-    public async Task<List<Product>> GetProductsWithLongShelfLifeAsync()
+    public async Task<List<Product>> GetProductsExpiringInNext3MonthsAsync()
     {
-        throw new NotImplementedException();
+        var now = DateTime.UtcNow.ToUniversalTime();
+        var dateAfter3Months = now.AddMonths(3).ToUniversalTime();
+        
+        var query = @"
+                    SELECT * FROM Products p
+                    WHERE p.expiration_date > {0}";
+        
+        Console.WriteLine("**********************************");
+        Console.WriteLine($"now: {now}");
+        Console.WriteLine($"Date after 3 months: {dateAfter3Months}");
+        Console.WriteLine("**********************************");
+
+        return await _context.Products
+            .FromSqlRaw(query, dateAfter3Months)
+            .ToListAsync();
     }
     
     public async Task<Product?> GetByIdAsync(long id)
