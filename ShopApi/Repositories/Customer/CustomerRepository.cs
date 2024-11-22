@@ -17,10 +17,13 @@ public class CustomerRepository: ICustomerRepository
 
     public async Task<List<Customer>> GetAllCustomerShoppedLasWeekAsync()
     {
-        var oneWeekAgo = AppHelpers.GetLastWeekMonday();
-        
+        var lastWeekMonday = AppHelpers.GetLastWeekMonday();
+        var lastWeekSunday = lastWeekMonday.AddDays(6);
+        Console.WriteLine("**************************************");
+        Console.WriteLine("Last week's Sunday: " + lastWeekSunday.ToString("yyyy-MM-dd"));
+        Console.WriteLine("**************************************");
         return await _context.Orders
-            .Where(o => o.OrderDate >= oneWeekAgo)
+            .Where(o => o.OrderDate >= lastWeekMonday && o.OrderDate <= lastWeekSunday)
             .Select(o => o.Customer)
             .Distinct()
             .ToListAsync();
