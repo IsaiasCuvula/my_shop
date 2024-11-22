@@ -13,6 +13,25 @@ public class ProductService
     {
         _productRepository = productRepository;
     }
+
+    public async Task<ApiResponse<List<Product>>> GetExpiredProducts()
+    {
+        ApiResponse<List<Product>> response = new ApiResponse<List<Product>>();
+        try
+        {
+            var products = await _productRepository.GetExpiredProductsAsync();
+            response.Data = products;
+            response.Message = products.Count == 0 ? "There is no expired product yet":"All Expired products successfully retrieved";
+            return response;
+        }
+        catch (Exception e)
+        {
+            response.Message = e.Message;
+            response.Status = false;
+            Console.WriteLine($"Failed to get all expired products: {e}");
+            return response;
+        }
+    }
     
     public async Task<ApiResponse<Product>> UpdateProduct(ProductDto dto, long productId)
     {

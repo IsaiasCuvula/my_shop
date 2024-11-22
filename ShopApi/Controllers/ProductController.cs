@@ -16,6 +16,13 @@ public class ProductController: ControllerBase
         _productService = productService;
     }
     
+    [HttpGet("expired")]
+    public async Task<ActionResult<ApiResponse<List<Product>>>> GetExpiredProducts()
+    {
+        var products = await _productService.GetExpiredProducts();
+        return Ok(products);
+    }
+    
     [HttpPut("{id}")]
     public async Task<ActionResult<ApiResponse<Product>>> UpdateProduct(long id, ProductDto dto)
     {
