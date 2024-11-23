@@ -7,4 +7,4 @@ public record CustomerDto(
    string Address ,
    string Phone ,
    string Email
-){}
+);
