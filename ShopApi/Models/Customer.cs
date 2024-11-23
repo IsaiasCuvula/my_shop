@@ -6,7 +6,8 @@ namespace ShopApi.Models;
 
 [Table("customers")]
 public class Customer
-{   [Column("id")]
+{   
+    [Column("id")]
     public long Id { get; set; } 
     [Column("name"),MaxLength(100)]
     public required string Name { get; set; } 
