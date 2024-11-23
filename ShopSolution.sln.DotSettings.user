@@ -3,7 +3,6 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/CreateUnitTestDialog/TestTemplateMapping/=xUnit/@EntryIndexedValue">33ff99d8-b1ad-4ed5-a4fd-376b97c2c841</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=389e245f_002D5c55_002D4db3_002D884a_002Da4db0846ed64/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetUserByIdAsync_ShouldReturnUser" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
-    &lt;TestId&gt;xUnit::59110EBC-16E5-49A9-B412-27BDB2315A19::net9.0::ShopApiTest.ShopApiServiceTests.GetCustomers_Returns_Correct_Number_Of_Customers&lt;/TestId&gt;
-    &lt;TestId&gt;xUnit::59110EBC-16E5-49A9-B412-27BDB2315A19::net9.0::ShopApiTest.ShopApiServiceTests.GetUserByIdAsync_ShouldReturnUser&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::59110EBC-16E5-49A9-B412-27BDB2315A19::net9.0::ShopApiTest.CustomerServiceTest.CreateCustomer_ValidCustomer_ShouldReturnNewCustomer&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

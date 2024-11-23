@@ -6,7 +6,7 @@ namespace ShopApi.Mappers;
 
 public class CustomerMapper
 {
-    public static Customer MapToEntity(CustomerDto dto)
+    public Customer MapToEntity(CustomerDto dto)
     {
         return new Customer
         {
