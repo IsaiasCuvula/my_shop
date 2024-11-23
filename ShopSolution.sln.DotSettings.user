@@ -4,5 +4,10 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=389e245f_002D5c55_002D4db3_002D884a_002Da4db0846ed64/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GetUserByIdAsync_ShouldReturnUser" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;TestAncestor&gt;
     &lt;TestId&gt;xUnit::59110EBC-16E5-49A9-B412-27BDB2315A19::net9.0::ShopApiTest.CustomerServiceTest&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::59110EBC-16E5-49A9-B412-27BDB2315A19::net9.0::ShopApiTest.Services.ProductServiceTest.CreateProduct_ShouldReturnNewProduct&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::59110EBC-16E5-49A9-B412-27BDB2315A19::net9.0::ShopApiTest.Services.ProductServiceTest.GetProductById_ShouldReturnProduct&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::59110EBC-16E5-49A9-B412-27BDB2315A19::net9.0::ShopApiTest.Services.ProductServiceTest.GetProductById_ShouldNotReturnProduct&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::59110EBC-16E5-49A9-B412-27BDB2315A19::net9.0::ShopApiTest.Services.ProductServiceTest.GetProducts_Returns_Correct_Number_Of_Products&lt;/TestId&gt;
+    &lt;TestId&gt;xUnit::59110EBC-16E5-49A9-B412-27BDB2315A19::net9.0::ShopApiTest.Services.ProductServiceTest&lt;/TestId&gt;
   &lt;/TestAncestor&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
