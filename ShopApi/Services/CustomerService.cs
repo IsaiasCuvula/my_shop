@@ -10,17 +10,14 @@ public class CustomerService
 {
     private readonly ICustomerRepository _customerRepository;
     private readonly IOrderRepository _orderRepository;
-    private readonly CustomerMapper _mapper;
 
     public CustomerService(
         ICustomerRepository customerRepository, 
-        IOrderRepository orderRepository,
-        CustomerMapper mapper
+        IOrderRepository orderRepository
         )
     {
         _customerRepository = customerRepository;
         _orderRepository = orderRepository;
-        _mapper = mapper;
     }
     
     public async Task<ApiResponse<Customer>> GetTopCustomerByTurnover()
@@ -131,7 +128,7 @@ public class CustomerService
         ApiResponse<Customer> response = new ApiResponse<Customer>();
         try
         {
-            Customer customer = _mapper.MapToEntity(dto);
+            Customer customer = CustomerMapper.MapToEntity(dto);
            
            var savedCustomer = await _customerRepository.AddAsync(customer);
            

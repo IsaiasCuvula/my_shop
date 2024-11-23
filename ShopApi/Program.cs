@@ -20,8 +20,6 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<OrderService>();
 
-builder.Services.AddScoped<CustomerMapper>();
-
 builder.Services.AddControllers();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
